@@ -28,18 +28,12 @@ func NewKConsumer(topic string) *KConsumer {
 // Consume continuously listens for messages from the Kafka topic.
 func (k *KConsumer) Consume(ctx context.Context, handler func(msg kafka.Message)) {
 	log.Printf("Starting consumer for topic: %s", k.Reader.Config().Topic)
-	defer func(Reader *kafka.Reader) {
-		err := Reader.Close()
-		if err != nil {
-			log.Printf("Error while closing the reader: %v", err)
-		}
-	}(k.Reader)
 
 	for {
 		msg, err := k.Reader.ReadMessage(ctx)
 		if err != nil {
 			log.Printf("Error while consuming message: %v", err)
-			continue
+			break
 		}
 		log.Printf("Received message: topic=%s partition=%d offset=%d key=%s value=%s",
 			msg.Topic, msg.Partition, msg.Offset, string(msg.Key), string(msg.Value))
