@@ -1,0 +1,69 @@
+package mail
+
+import (
+	"errors"
+	"fmt"
+	"github.com/ngdangkietswe/swe-notification-service/configs"
+	"github.com/ngdangkietswe/swe-notification-service/mail/model"
+	"log"
+	"net/smtp"
+)
+
+var (
+	host     = configs.GlobalConfig.SmtpHost
+	port     = configs.GlobalConfig.SmtpPort
+	username = configs.GlobalConfig.SmtpUsername
+	password = configs.GlobalConfig.SmtpPassword
+	address  = fmt.Sprintf("%s:%s", host, port)
+)
+
+type loginAuth struct {
+	username, password string
+}
+
+func (l *loginAuth) Start(server *smtp.ServerInfo) (proto string, toServer []byte, err error) {
+	return "LOGIN", []byte{}, nil
+}
+
+func (l *loginAuth) Next(fromServer []byte, more bool) (toServer []byte, err error) {
+	if more {
+		switch string(fromServer) {
+		case "Username:":
+			return []byte(l.username), nil
+		case "Password:":
+			return []byte(l.password), nil
+		default:
+			return nil, errors.New("unexpected server challenge")
+		}
+	}
+	return nil, nil
+}
+
+func LoginAuth(username, password string) smtp.Auth {
+	return &loginAuth{username, password}
+}
+
+// SendMail is a function that sends an email.
+func SendMail(payload model.MailPayload) {
+	to := []string{payload.To}
+	msg := []byte(fmt.Sprintf(
+		"From: %s\r\nTo: %s\r\nSubject: %s\r\n\r\n%s",
+		username,        // Sender's email address
+		payload.To,      // Recipient's email address
+		payload.Subject, // Subject of the email
+		payload.Body,    // Body of the email
+	))
+	auth := LoginAuth(username, password)
+
+	log.Printf("[MAIL SERVICE] Initiating email sending process...")
+	log.Printf("[MAIL SERVICE] SMTP Server: %s", address)
+	log.Printf("[MAIL SERVICE] Sending email to: %s", payload.To)
+
+	err := smtp.SendMail(address, auth, username, to, msg)
+	if err != nil {
+		log.Printf("[MAIL SERVICE] ERROR: Failed to send email to %s. Reason: %v", payload.To, err)
+		return
+	}
+
+	log.Printf("[MAIL SERVICE] SUCCESS: Email successfully sent to %s.", payload.To)
+}

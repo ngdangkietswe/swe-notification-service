@@ -37,4 +37,8 @@ type Configuration struct {
 	AppName            string `mapstructure:"APP_NAME"`
 	KafkaBrokers       string `mapstructure:"KAFKA_BROKER"`
 	KafkaConsumerGroup string `mapstructure:"KAFKA_CONSUMER_GROUP"`
+	SmtpHost           string `mapstructure:"SMTP_HOST"`
+	SmtpPort           string `mapstructure:"SMTP_PORT"`
+	SmtpUsername       string `mapstructure:"SMTP_USERNAME"`
+	SmtpPassword       string `mapstructure:"SMTP_PASSWORD"`
 }
