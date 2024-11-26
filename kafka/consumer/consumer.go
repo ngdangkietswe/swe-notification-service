@@ -20,7 +20,7 @@ func NewKConsumer(topic string) *KConsumer {
 			GroupID:  configs.GlobalConfig.KafkaConsumerGroup,
 			MinBytes: 10e3,                   // 10KB
 			MaxBytes: 10e6,                   // 10MB
-			MaxWait:  500 * time.Microsecond, // 500ms
+			MaxWait:  500 * time.Millisecond, // 500ms
 		}),
 	}
 }
