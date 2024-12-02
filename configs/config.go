@@ -12,13 +12,14 @@ var (
 )
 
 func init() {
-	env := os.Getenv("K8S_ENV")
-	log.Printf("K8S_ENV is set to %s", env)
+	env := "local"
+	if e := os.Getenv("ENV"); e != "" {
+		env = e
+	}
+
 	if strings.ToLower(env) == "prod" {
-		log.Println("Using production config")
 		viper.AutomaticEnv()
 	} else {
-		log.Println("Using local config")
 		viper.AddConfigPath("./configs")
 		viper.SetConfigName("config")
 		viper.SetConfigType("env")
@@ -35,7 +36,9 @@ func init() {
 		log.Fatalf("Can't unmarshal config: %v", err)
 	}
 
-	log.Printf("Config loaded: %v", GlobalConfig)
+	log.Printf(
+		"Application is running in %s environment\n"+
+			"Config loaded: %v", env, *GlobalConfig)
 }
 
 type Configuration struct {
