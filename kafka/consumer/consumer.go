@@ -27,7 +27,8 @@ func NewKConsumer(topic string) *KConsumer {
 
 // Consume continuously listens for messages from the Kafka topic.
 func (k *KConsumer) Consume(ctx context.Context, handler func(msg kafka.Message)) {
-	log.Printf("Starting consumer for topic: %s", k.Reader.Config().Topic)
+	log.Printf("Starting consumer for topic: %s with groupID: %s, brokers: %s",
+		k.Reader.Config().Topic, k.Reader.Config().GroupID, k.Reader.Config().Brokers)
 
 	for {
 		msg, err := k.Reader.ReadMessage(ctx)
