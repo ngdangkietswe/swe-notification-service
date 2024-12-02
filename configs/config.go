@@ -34,6 +34,8 @@ func init() {
 	if err != nil {
 		log.Fatalf("Can't unmarshal config: %v", err)
 	}
+
+	log.Printf("Config loaded: %v", GlobalConfig)
 }
 
 type Configuration struct {
