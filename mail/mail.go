@@ -3,18 +3,18 @@ package mail
 import (
 	"errors"
 	"fmt"
-	"github.com/ngdangkietswe/swe-notification-service/configs"
+	"github.com/ngdangkietswe/swe-go-common-shared/config"
 	"github.com/ngdangkietswe/swe-notification-service/mail/model"
 	"log"
 	"net/smtp"
 )
 
 var (
-	host     = configs.GlobalConfig.SmtpHost
-	port     = configs.GlobalConfig.SmtpPort
-	username = configs.GlobalConfig.SmtpUsername
-	password = configs.GlobalConfig.SmtpPassword
-	address  = fmt.Sprintf("%s:%s", host, port)
+	host     = config.GetString("SMTP_HOST", "smtp-mail.outlook.com")
+	port     = config.GetInt("SMTP_PORT", 587)
+	username = config.GetString("SMTP_USERNAME", "annonymous@yopmail.com")
+	password = config.GetString("SMTP_PASSWORD", "p@ssw0rd")
+	address  = fmt.Sprintf("%s:%d", host, port)
 )
 
 type loginAuth struct {

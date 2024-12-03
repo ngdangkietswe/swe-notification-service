@@ -2,9 +2,10 @@ package consumer
 
 import (
 	"context"
-	"github.com/ngdangkietswe/swe-notification-service/configs"
+	"github.com/ngdangkietswe/swe-go-common-shared/config"
 	"github.com/segmentio/kafka-go"
 	"log"
+	"strings"
 	"time"
 )
 
@@ -15,9 +16,9 @@ type KConsumer struct {
 func NewKConsumer(topic string) *KConsumer {
 	return &KConsumer{
 		Reader: kafka.NewReader(kafka.ReaderConfig{
-			Brokers:  []string{configs.GlobalConfig.KafkaBrokers},
+			Brokers:  strings.Split(config.GetString("KAFKA_BROKERS", "localhost:9092"), ","),
 			Topic:    topic,
-			GroupID:  configs.GlobalConfig.KafkaConsumerGroup,
+			GroupID:  config.GetString("KAFKA_CONSUMER_GROUP", "swe-consumer-group"),
 			MinBytes: 10e3,                   // 10KB
 			MaxBytes: 10e6,                   // 10MB
 			MaxWait:  500 * time.Millisecond, // 500ms
