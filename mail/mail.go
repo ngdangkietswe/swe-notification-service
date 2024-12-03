@@ -9,14 +9,6 @@ import (
 	"net/smtp"
 )
 
-var (
-	host     = config.GetString("SMTP_HOST", "smtp-mail.outlook.com")
-	port     = config.GetInt("SMTP_PORT", 587)
-	username = config.GetString("SMTP_USERNAME", "annonymous@yopmail.com")
-	password = config.GetString("SMTP_PASSWORD", "p@ssw0rd")
-	address  = fmt.Sprintf("%s:%d", host, port)
-)
-
 type loginAuth struct {
 	username, password string
 }
@@ -45,6 +37,12 @@ func LoginAuth(username, password string) smtp.Auth {
 
 // SendMail is a function that sends an email.
 func SendMail(payload model.MailPayload) {
+	host := config.GetString("SMTP_HOST", "smtp-mail.outlook.com")
+	port := config.GetInt("SMTP_PORT", 587)
+	username := config.GetString("SMTP_USERNAME", "annonymous@yopmail.com")
+	password := config.GetString("SMTP_PASSWORD", "p@ssw0rd")
+	address := fmt.Sprintf("%s:%d", host, port)
+
 	to := []string{payload.To}
 	msg := []byte(fmt.Sprintf(
 		"From: %s\r\nTo: %s\r\nSubject: %s\r\n\r\n%s",

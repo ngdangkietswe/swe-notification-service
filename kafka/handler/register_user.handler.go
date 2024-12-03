@@ -33,5 +33,4 @@ func (h *RegisterUserHandler) Handle(payload *model.RegisterUser) {
 
 	log.Printf("[REGISTER USER HANDLER] Sending welcome email to %s", payload.Email)
 	mail.SendMail(emailPayload)
-	log.Printf("[REGISTER USER HANDLER] Welcome email sent to: %s", payload.Email)
 }
