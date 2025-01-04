@@ -10,25 +10,25 @@ import (
 	"log"
 )
 
-type RegisterUserConsumer struct {
-	handler *handler.RegisterUserHandler
+type ResetPasswordConsumer struct {
+	handler *handler.ResetPasswordHandler
 }
 
-func NewRegisterUserConsumer(handler *handler.RegisterUserHandler) *RegisterUserConsumer {
-	return &RegisterUserConsumer{
+func NewResetPasswordConsumer(handler *handler.ResetPasswordHandler) *ResetPasswordConsumer {
+	return &ResetPasswordConsumer{
 		handler: handler,
 	}
 }
 
 // Consume continuously listens for messages from the Kafka topic.
-func (c *RegisterUserConsumer) Consume() {
-	kConsumer := NewKConsumer(constants.TopicRegisterUser)
+func (c *ResetPasswordConsumer) Consume() {
+	kConsumer := NewKConsumer(constants.TopicResetPassword)
 	kConsumer.Consume(context.Background(), func(msg kafka.Message) {
-		var registerUser *domain.RegisterUser
-		err := json.Unmarshal(msg.Value, &registerUser)
+		var resetPassword *domain.ResetPassword
+		err := json.Unmarshal(msg.Value, &resetPassword)
 		if err != nil {
 			log.Printf("error while unmarshalling message: %v", err)
 		}
-		c.handler.Handle(registerUser)
+		c.handler.Handle(resetPassword)
 	})
 }

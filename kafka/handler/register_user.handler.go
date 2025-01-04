@@ -2,7 +2,7 @@ package handler
 
 import (
 	"fmt"
-	"github.com/ngdangkietswe/swe-notification-service/kafka/model"
+	"github.com/ngdangkietswe/swe-go-common-shared/domain"
 	"github.com/ngdangkietswe/swe-notification-service/mail"
 	mailpayload "github.com/ngdangkietswe/swe-notification-service/mail/model"
 	"log"
@@ -16,7 +16,7 @@ func NewRegisterUserHandler() *RegisterUserHandler {
 }
 
 // Handle sends a welcome email to the user.
-func (h *RegisterUserHandler) Handle(payload *model.RegisterUser) {
+func (h *RegisterUserHandler) Handle(payload *domain.RegisterUser) {
 	log.Printf("[REGISTER USER HANDLER] Processing registration for email: %s", payload.Email)
 
 	// Prepare the email payload.
