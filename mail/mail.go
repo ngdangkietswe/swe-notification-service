@@ -5,7 +5,6 @@ import (
 	"fmt"
 	"github.com/ngdangkietswe/swe-go-common-shared/config"
 	"github.com/ngdangkietswe/swe-notification-service/mail/model"
-	"log"
 	"net/smtp"
 )
 
@@ -36,7 +35,7 @@ func LoginAuth(username, password string) smtp.Auth {
 }
 
 // SendMail is a function that sends an email.
-func SendMail(payload model.MailPayload) {
+func SendMail(payload model.MailPayload) error {
 	host := config.GetString("SMTP_HOST", "smtp-mail.outlook.com")
 	port := config.GetInt("SMTP_PORT", 587)
 	username := config.GetString("SMTP_USERNAME", "annonymous@yopmail.com")
@@ -53,15 +52,10 @@ func SendMail(payload model.MailPayload) {
 	))
 	auth := LoginAuth(username, password)
 
-	log.Printf("[MAIL SERVICE] Initiating email sending process...")
-	log.Printf("[MAIL SERVICE] SMTP Server: %s", address)
-	log.Printf("[MAIL SERVICE] Sending email to: %s", payload.To)
-
 	err := smtp.SendMail(address, auth, username, to, msg)
 	if err != nil {
-		log.Printf("[MAIL SERVICE] ERROR: Failed to send email to %s. Reason: %v", payload.To, err)
-		return
+		return err
 	}
 
-	log.Printf("[MAIL SERVICE] SUCCESS: Email successfully sent to %s.", payload.To)
+	return nil
 }

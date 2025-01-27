@@ -3,22 +3,24 @@ package handler
 import (
 	"fmt"
 	"github.com/ngdangkietswe/swe-go-common-shared/domain"
+	"github.com/ngdangkietswe/swe-go-common-shared/logger"
 	"github.com/ngdangkietswe/swe-notification-service/mail"
 	mailpayload "github.com/ngdangkietswe/swe-notification-service/mail/model"
-	"log"
+	"go.uber.org/zap"
 )
 
 type RegisterUserHandler struct {
+	logger *logger.Logger
 }
 
-func NewRegisterUserHandler() *RegisterUserHandler {
-	return &RegisterUserHandler{}
+func NewRegisterUserHandler(logger *logger.Logger) *RegisterUserHandler {
+	return &RegisterUserHandler{
+		logger: logger,
+	}
 }
 
 // Handle sends a welcome email to the user.
 func (h *RegisterUserHandler) Handle(payload *domain.RegisterUser) {
-	log.Printf("[REGISTER USER HANDLER] Processing registration for email: %s", payload.Email)
-
 	// Prepare the email payload.
 	emailPayload := mailpayload.MailPayload{
 		To:      payload.Email,
@@ -31,6 +33,9 @@ func (h *RegisterUserHandler) Handle(payload *domain.RegisterUser) {
 		),
 	}
 
-	log.Printf("[REGISTER USER HANDLER] Sending welcome email to %s", payload.Email)
-	mail.SendMail(emailPayload)
+	h.logger.Info("Sending welcome email to user", zap.String("email", payload.Email))
+
+	if err := mail.SendMail(emailPayload); err != nil {
+		h.logger.Error("Failed to send welcome email to user", zap.String("email", payload.Email), zap.Error(err))
+	}
 }

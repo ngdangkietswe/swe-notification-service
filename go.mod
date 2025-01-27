@@ -5,7 +5,7 @@ go 1.22.7
 toolchain go1.22.9
 
 require (
-	github.com/ngdangkietswe/swe-go-common-shared v0.0.0-20250104071109-c5569ffd49a6
+	github.com/ngdangkietswe/swe-go-common-shared v0.0.0-20250127091543-13837bc9a014
 	github.com/segmentio/kafka-go v0.4.47
 	go.uber.org/fx v1.23.0
 )
@@ -28,7 +28,7 @@ require (
 	github.com/spf13/viper v1.19.0 // indirect
 	github.com/subosito/gotenv v1.6.0 // indirect
 	go.uber.org/dig v1.18.0 // indirect
-	go.uber.org/multierr v1.10.0 // indirect
+	go.uber.org/multierr v1.11.0 // indirect
 	go.uber.org/zap v1.26.0 // indirect
 	golang.org/x/exp v0.0.0-20230905200255-921286631fa9 // indirect
 	golang.org/x/sys v0.25.0 // indirect
