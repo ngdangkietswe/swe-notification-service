@@ -9,7 +9,11 @@ import (
 var Module = fx.Provide(
 	handler.NewRegisterUserHandler,
 	handler.NewResetPasswordHandler,
+	handler.NewRequestOvertimeHandler,
+	handler.NewReplyOvertimeHandler,
 
 	consumer.NewRegisterUserConsumer,
 	consumer.NewResetPasswordConsumer,
+	consumer.NewRequestOvertimeConsumer,
+	consumer.NewReplyOvertimeConsumer,
 )

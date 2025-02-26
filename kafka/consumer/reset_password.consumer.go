@@ -5,6 +5,7 @@ import (
 	"encoding/json"
 	"github.com/ngdangkietswe/swe-go-common-shared/constants"
 	"github.com/ngdangkietswe/swe-go-common-shared/domain"
+	"github.com/ngdangkietswe/swe-go-common-shared/kafka/consumer"
 	"github.com/ngdangkietswe/swe-notification-service/kafka/handler"
 	"github.com/segmentio/kafka-go"
 	"log"
@@ -22,7 +23,7 @@ func NewResetPasswordConsumer(handler *handler.ResetPasswordHandler) *ResetPassw
 
 // Consume continuously listens for messages from the Kafka topic.
 func (c *ResetPasswordConsumer) Consume() {
-	kConsumer := NewKConsumer(constants.TopicResetPassword)
+	kConsumer := consumer.NewKConsumer(constants.TopicResetPassword)
 	kConsumer.Consume(context.Background(), func(msg kafka.Message) {
 		var resetPassword *domain.ResetPassword
 		err := json.Unmarshal(msg.Value, &resetPassword)

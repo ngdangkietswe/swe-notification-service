@@ -21,6 +21,12 @@ func main() {
 		fx.Invoke(func(c *consumer.ResetPasswordConsumer) {
 			go c.Consume()
 		}),
+		fx.Invoke(func(c *consumer.RequestOvertimeConsumer) {
+			go c.Consume()
+		}),
+		fx.Invoke(func(c *consumer.ReplyOvertimeConsumer) {
+			go c.Consume()
+		}),
 	)
 
 	app.Run()
