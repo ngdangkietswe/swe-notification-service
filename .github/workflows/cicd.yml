@@ -103,8 +103,8 @@ jobs:
           set -e  # Exit on any error
           echo "🔧 Modifying Kubernetes deployment files..."
           
-          git config --global user.name "ngdangkietse"
-          git config --global user.email "kietnguyen17052001@gmail.com"          
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"        
 
           # Extract the image tag
           IMAGE_TAG=${{ needs.build-and-push.outputs.IMAGE_TAG }}
@@ -129,7 +129,7 @@ jobs:
 
   push-notification-to-slack:
     name: Slack Notification
-    needs: [build-and-push, modify-k8s]
+    needs: [ build-and-push, modify-k8s ]
     runs-on: ubuntu-latest
 
     env:
