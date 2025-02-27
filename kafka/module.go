@@ -7,11 +7,13 @@ import (
 )
 
 var Module = fx.Provide(
+	handler.NewCdcAuthUsersHandler,
 	handler.NewRegisterUserHandler,
 	handler.NewResetPasswordHandler,
 	handler.NewRequestOvertimeHandler,
 	handler.NewReplyOvertimeHandler,
 
+	consumer.NewCdcAuthUsersConsumer,
 	consumer.NewRegisterUserConsumer,
 	consumer.NewResetPasswordConsumer,
 	consumer.NewRequestOvertimeConsumer,
