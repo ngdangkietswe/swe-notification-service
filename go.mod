@@ -8,7 +8,7 @@ require (
 	entgo.io/ent v0.14.2
 	github.com/google/uuid v1.6.0
 	github.com/lib/pq v1.10.9
-	github.com/ngdangkietswe/swe-go-common-shared v0.0.0-20250223145806-6fff2da6ef30
+	github.com/ngdangkietswe/swe-go-common-shared v0.0.0-20250531043739-eb8bbf8956bb
 	github.com/samber/lo v1.49.1
 	github.com/segmentio/kafka-go v0.4.47
 	go.uber.org/fx v1.23.0
@@ -47,7 +47,7 @@ require (
 	golang.org/x/exp v0.0.0-20230905200255-921286631fa9 // indirect
 	golang.org/x/mod v0.23.0 // indirect
 	golang.org/x/sys v0.30.0 // indirect
-	golang.org/x/text v0.21.0 // indirect
+	golang.org/x/text v0.22.0 // indirect
 	gopkg.in/ini.v1 v1.67.0 // indirect
 	gopkg.in/yaml.v3 v3.0.1 // indirect
 )

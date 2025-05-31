@@ -22,6 +22,10 @@ func NewEntClient() *ent.Client {
 			config.GetString("DB_SSL_MODE", "disable"),
 			config.GetString("DB_SEARCH_PATH", "swenotification"),
 		),
+		ent.Debug(), // Enable debug mode for development
+		ent.Log(func(a ...any) {
+			log.Println(a...) // Use standard log for simplicity
+		}),
 	)
 	if err != nil {
 		log.Fatalf("failed opening connection to postgres: %v", err)
